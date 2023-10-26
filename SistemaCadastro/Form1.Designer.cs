@@ -13,9 +13,12 @@
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing)
             {
-                components.Dispose();
+                if (components != null)
+                {
+                    components.Dispose();
+                }
             }
             base.Dispose(disposing);
         }
@@ -32,8 +35,8 @@
             label2 = new Label();
             label3 = new Label();
             TxtNome = new TextBox();
-            DataNascimento = new DateTimePicker();
-            maskedTextBox1 = new MaskedTextBox();
+            txtDataNascimento = new DateTimePicker();
+            txtTelefone = new MaskedTextBox();
             CheckCasa = new CheckBox();
             label4 = new Label();
             TxtEmail = new TextBox();
@@ -85,25 +88,26 @@
             TxtNome.Size = new Size(362, 23);
             TxtNome.TabIndex = 3;
             // 
-            // DataNascimento
+            // txtDataNascimento
             // 
-            DataNascimento.Location = new Point(109, 93);
-            DataNascimento.Name = "DataNascimento";
-            DataNascimento.Size = new Size(249, 23);
-            DataNascimento.TabIndex = 4;
+            txtDataNascimento.Format = DateTimePickerFormat.Short;
+            txtDataNascimento.Location = new Point(109, 93);
+            txtDataNascimento.Name = "txtDataNascimento";
+            txtDataNascimento.Size = new Size(173, 23);
+            txtDataNascimento.TabIndex = 4;
             // 
-            // maskedTextBox1
+            // txtTelefone
             // 
-            maskedTextBox1.Location = new Point(108, 179);
-            maskedTextBox1.Mask = "(00) 00000-0000";
-            maskedTextBox1.Name = "maskedTextBox1";
-            maskedTextBox1.Size = new Size(174, 23);
-            maskedTextBox1.TabIndex = 5;
+            txtTelefone.Location = new Point(108, 179);
+            txtTelefone.Mask = "(00) 00000-0000";
+            txtTelefone.Name = "txtTelefone";
+            txtTelefone.Size = new Size(174, 23);
+            txtTelefone.TabIndex = 5;
             // 
             // CheckCasa
             // 
             CheckCasa.AutoSize = true;
-            CheckCasa.Location = new Point(109, 222);
+            CheckCasa.Location = new Point(5, 261);
             CheckCasa.Name = "CheckCasa";
             CheckCasa.Size = new Size(127, 19);
             CheckCasa.TabIndex = 6;
@@ -129,7 +133,7 @@
             // checkVeiculo
             // 
             checkVeiculo.AutoSize = true;
-            checkVeiculo.Location = new Point(109, 248);
+            checkVeiculo.Location = new Point(239, 261);
             checkVeiculo.Name = "checkVeiculo";
             checkVeiculo.Size = new Size(101, 19);
             checkVeiculo.TabIndex = 9;
@@ -141,9 +145,9 @@
             groupBox1.Controls.Add(radioO);
             groupBox1.Controls.Add(radioF);
             groupBox1.Controls.Add(radioM);
-            groupBox1.Location = new Point(108, 273);
+            groupBox1.Location = new Point(1, 286);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(363, 135);
+            groupBox1.Size = new Size(402, 138);
             groupBox1.TabIndex = 10;
             groupBox1.TabStop = false;
             groupBox1.Text = "Sexo";
@@ -155,7 +159,6 @@
             radioO.Name = "radioO";
             radioO.Size = new Size(56, 19);
             radioO.TabIndex = 2;
-            radioO.TabStop = true;
             radioO.Text = "Outro";
             radioO.UseVisualStyleBackColor = true;
             // 
@@ -166,13 +169,13 @@
             radioF.Name = "radioF";
             radioF.Size = new Size(75, 19);
             radioF.TabIndex = 1;
-            radioF.TabStop = true;
             radioF.Text = "Feminino";
             radioF.UseVisualStyleBackColor = true;
             // 
             // radioM
             // 
             radioM.AutoSize = true;
+            radioM.Checked = true;
             radioM.Location = new Point(15, 29);
             radioM.Name = "radioM";
             radioM.Size = new Size(80, 19);
@@ -187,10 +190,11 @@
             lista.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             lista.FormattingEnabled = true;
             lista.ItemHeight = 17;
-            lista.Location = new Point(16, 456);
+            lista.Location = new Point(477, 7);
             lista.Name = "lista";
-            lista.Size = new Size(562, 51);
+            lista.Size = new Size(311, 510);
             lista.TabIndex = 11;
+            lista.DoubleClick += lista_DoubleClick;
             // 
             // label5
             // 
@@ -203,9 +207,9 @@
             // 
             // buttonCasdastre
             // 
-            buttonCasdastre.Location = new Point(24, 425);
+            buttonCasdastre.Location = new Point(5, 481);
             buttonCasdastre.Name = "buttonCasdastre";
-            buttonCasdastre.Size = new Size(100, 25);
+            buttonCasdastre.Size = new Size(100, 36);
             buttonCasdastre.TabIndex = 14;
             buttonCasdastre.Text = "Cadastra/Alterar";
             buttonCasdastre.UseVisualStyleBackColor = true;
@@ -213,9 +217,9 @@
             // 
             // buttonExcluir
             // 
-            buttonExcluir.Location = new Point(148, 425);
+            buttonExcluir.Location = new Point(191, 481);
             buttonExcluir.Name = "buttonExcluir";
-            buttonExcluir.Size = new Size(100, 25);
+            buttonExcluir.Size = new Size(100, 36);
             buttonExcluir.TabIndex = 15;
             buttonExcluir.Text = "Excluir";
             buttonExcluir.UseVisualStyleBackColor = true;
@@ -223,9 +227,9 @@
             // 
             // buttonLimpar
             // 
-            buttonLimpar.Location = new Point(272, 425);
+            buttonLimpar.Location = new Point(371, 481);
             buttonLimpar.Name = "buttonLimpar";
-            buttonLimpar.Size = new Size(100, 25);
+            buttonLimpar.Size = new Size(100, 36);
             buttonLimpar.TabIndex = 16;
             buttonLimpar.Text = "Limpar";
             buttonLimpar.UseVisualStyleBackColor = true;
@@ -234,10 +238,10 @@
             // comboEstCivil
             // 
             comboEstCivil.FormattingEnabled = true;
-            comboEstCivil.Items.AddRange(new object[] { "Casado", "Solteiro", "Divorciado", "União Estavel", "Viuvo" });
+            comboEstCivil.Items.AddRange(new object[] { "Casado" });
             comboEstCivil.Location = new Point(107, 130);
             comboEstCivil.Name = "comboEstCivil";
-            comboEstCivil.Size = new Size(251, 23);
+            comboEstCivil.Size = new Size(175, 23);
             comboEstCivil.TabIndex = 17;
             // 
             // Form1
@@ -256,14 +260,14 @@
             Controls.Add(TxtEmail);
             Controls.Add(label4);
             Controls.Add(CheckCasa);
-            Controls.Add(maskedTextBox1);
-            Controls.Add(DataNascimento);
+            Controls.Add(txtTelefone);
+            Controls.Add(txtDataNascimento);
             Controls.Add(TxtNome);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
             Name = "Form1";
-            Text = "Form1";
+            Text = "Sistema Casdastro";
             Load += Form1_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
@@ -277,8 +281,8 @@
         private Label label2;
         private Label label3;
         private TextBox TxtNome;
-        private DateTimePicker DataNascimento;
-        private MaskedTextBox maskedTextBox1;
+        private DateTimePicker txtDataNascimento;
+        private MaskedTextBox txtTelefone;
         private CheckBox CheckCasa;
         private Label label4;
         private TextBox TxtEmail;
